@@ -27,11 +27,10 @@ using the PCA method are that computational complexity is high and it can only p
 facial expressions.
 ## Features
 <!--List the features of the project as shown below-->
-- Implements advance neural network method.
-- A framework based application for deployment pur
+- Construct a database connection with criminal records
+- Secure network 
 - High scalability.
 - Less time complexity.
-- A specific scope of Chatbot response model, using json data format.
 
 ## Requirements
 <!--List the requirements of the project as shown below-->
@@ -72,115 +71,66 @@ environments.
 ## Code :
 ~~~
 import the necessary packages
-
 from Imutils import paths
-
 import face recognition
-
 import argparse
-
 import pickle
-
 import cv2
-
 import os
-
 # construct the argument parser and parse the arguments
-
 ap = argparse.ArgumentParser()
-
 ap.add_argument("-i", "--dataset", required=True,
-
 help="path to input directory of faces + images")
-
 ap.add_argument("-e", "--encodings", required=True,
-
 help="path to serialized db of facial encodings")
-
 ap.add_argument("-d", "--detection-method", type=str, default="cnn",
-
 help="face detection model to use: either `hog` or `cnn`")
-
 args = vars(ap.parse_args())
-
 # grab the paths to the input images in our dataset
-
 print("[INFO] quantifying faces...")
-
 imagePaths = list(paths.list_images(args["dataset"]))
-
 # initialize the list of known encodings and known names
-
 knownEncodings = []
-
 knownNames = []
-
 # loop over the image paths
-
 for (i, imagePath) in enumerate(imagePaths):
-
 # extract the person name from the image path
-
 print("[INFO] processing image {}/{}".format(i + 1,
-
 len(imagePaths)))
-
 name = imagePath.split(os.path.sep)[-2]
-
 # load the input image and convert it from BGR (OpenCV ordering)
-
 # to dlib ordering (RGB)
-
 image = cv2.imread(imagePath)
-
 rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
 # detect the (x, y)-coordinates of the bounding boxes
-
 # corresponding to each face in the input image
-
 boxes = face_recognition.face_locations(rgb,
-
 model=args["detection_method"])
-
 # compute the facial embedding for the face
-
 encodings = face_recognition.face_encodings(rgb, boxes)
-
 # loop over the encodings
-
 for encoding in encodings:
-
 # add each encoding + name to our set of known names and
 # encodings
-
 knownEncodings.append(encoding)
-
 knownNames.append(name)
-
 # dump the facial encodings + names to disk
-
 print("[INFO] serializing encodings...")
-
 data = {"encodings": knownEncodings, "names": knownNames}
-
 f = open(args["encodings"], "wb")
-
 f.write(pickle.dumps(data))
-
 f.close()
 ~~~
 ## Results and Impact
 <!--Give the results and impact as shown below-->
-The Sign Language Detection System enhances accessibility for individuals with hearing and speech impairments, providing a valuable tool for inclusive communication. The project's integration of computer vision and deep learning showcases its potential for intuitive and interactive human-computer interaction.
+By using this real time criminal identification using face recognition can get security while attaching criminal database with home camera and this will send a signal to nearby police station.
 
-This project serves as a foundation for future developments in assistive technologies and contributes to creating a more inclusive and accessible digital environment.
+Thisay give a secure surrounding where theft happensore.
 
 ## Articles published / References
 1] Nurul Azma Abdullah, Md. Jamri Saidi and Nurul Hidayah Ab Rahman "Face recognition for criminal identification: An 
 implementation of principal component analysis for face recognition"The 2nd International Conference on Applied Science and 
-Technology 2017 (ICAST'17
-
+Technology 2017 (ICAST')
 [2] Apoorva.P, Ramesh.B and Varshitha.M.R "Automated criminal identification by face recognition using open computer vision 
 classifiers" Third International Conference on Computing Methodologies and Communication (ICCMC 2019)
 
